@@ -8,6 +8,7 @@ from urllib.parse import urlsplit
 from .common import file_sha256, write_json
 from .inventory import inventory
 from .runner import run
+from .profile import public_profile
 
 
 def main(argv=None):
@@ -16,6 +17,9 @@ def main(argv=None):
     inv = commands.add_parser("inventory", help="Collect local host/GPU metadata")
     inv.add_argument("--machine-id", required=True)
     inv.add_argument("--output", type=Path, required=True)
+    profile = commands.add_parser("profile", help="Export a de-identified public hardware profile")
+    profile.add_argument("--id", required=True, help="Neutral label: machine-001")
+    profile.add_argument("--output", type=Path, required=True)
     digest = commands.add_parser("hash-model", help="Hash the exact model artifact")
     digest.add_argument("path", type=Path)
     bench = commands.add_parser("run", help="Run a reproducible workload against llama-server")
@@ -30,7 +34,10 @@ def main(argv=None):
     bench.add_argument("--api-key-env", default="GPU_BENCH_API_KEY")
     args = parser.parse_args(argv)
     try:
-        if args.command == "hash-model":
+        if args.command == "profile":
+            write_json(args.output, public_profile(args.id))
+            print(args.output)
+        elif args.command == "hash-model":
             print(file_sha256(args.path))
         elif args.command == "inventory":
             write_json(args.output, inventory(args.machine_id))

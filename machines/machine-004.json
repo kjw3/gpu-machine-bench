@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0",
+  "record_type": "public_compute_profile",
+  "profile_id": "machine-004",
+  "collection_scope": "host",
+  "system": {
+    "os_family": "Linux",
+    "architecture": "aarch64",
+    "logical_cpus": 20,
+    "memory_total_gib": 121.7,
+    "cpu_groups": [
+      {
+        "model": "Cortex-X925",
+        "cores_per_socket": 10.0,
+        "sockets": 1.0,
+        "threads_per_core": 1.0
+      },
+      {
+        "model": "Cortex-A725",
+        "cores_per_socket": 10.0,
+        "sockets": 1.0,
+        "threads_per_core": 1.0
+      }
+    ]
+  },
+  "software": {
+    "docker_version": "29.2.1",
+    "nvidia_container_toolkit_version": "1.20.1",
+    "driver_cuda_max_version": "13.0"
+  },
+  "gpus": [
+    {
+      "device": "gpu-1",
+      "model": "NVIDIA GB10",
+      "memory_architecture": "unified",
+      "memory_total_mib": null,
+      "power_limit_w": null,
+      "max_sm_clock_mhz": 3003.0,
+      "max_memory_clock_mhz": null,
+      "pcie_max_generation": 1.0,
+      "pcie_max_width": 16.0,
+      "compute_capability": "12.1",
+      "driver_version": "580.178.04"
+    }
+  ],
+  "capabilities": {
+    "nvidia_gpu_count": 1,
+    "cuda_devices_detected": true,
+    "multi_gpu": false,
+    "shared_system_gpu_memory": true
+  },
+  "limitations": [
+    "Hardware discovery does not verify framework compatibility or model fit.",
+    "CUDA version is driver compatibility, not installed toolkit version.",
+    "GPU memory is per device; multiple devices are not a shared VRAM pool.",
+    "Null values indicate unavailable or unsupported counters.",
+    "Hardware combinations may be recognizable despite removal of direct identifiers."
+  ]
+}

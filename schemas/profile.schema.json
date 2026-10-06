@@ -1,0 +1,262 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "record_type",
+    "profile_id",
+    "collection_scope",
+    "system",
+    "software",
+    "gpus",
+    "capabilities",
+    "limitations"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "record_type": {
+      "const": "public_compute_profile"
+    },
+    "profile_id": {
+      "type": "string",
+      "pattern": "^machine-[0-9]{3}$"
+    },
+    "collection_scope": {
+      "enum": [
+        "host",
+        "container"
+      ]
+    },
+    "system": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "os_family",
+        "architecture",
+        "logical_cpus",
+        "memory_total_gib",
+        "cpu_groups"
+      ],
+      "properties": {
+        "os_family": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "architecture": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "logical_cpus": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "memory_total_gib": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "cpu_groups": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "model",
+              "sockets",
+              "cores_per_socket",
+              "threads_per_core"
+            ],
+            "properties": {
+              "model": {
+                "type": "string"
+              },
+              "sockets": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "cores_per_socket": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "threads_per_core": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    "software": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "docker_version",
+        "nvidia_container_toolkit_version",
+        "driver_cuda_max_version"
+      ],
+      "properties": {
+        "docker_version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "nvidia_container_toolkit_version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "driver_cuda_max_version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "gpus": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "device",
+          "model",
+          "memory_architecture",
+          "memory_total_mib",
+          "power_limit_w",
+          "max_sm_clock_mhz",
+          "max_memory_clock_mhz",
+          "pcie_max_generation",
+          "pcie_max_width",
+          "compute_capability",
+          "driver_version"
+        ],
+        "properties": {
+          "device": {
+            "type": "string",
+            "pattern": "^gpu-[1-9][0-9]*$"
+          },
+          "model": {
+            "type": "string"
+          },
+          "memory_architecture": {
+            "enum": [
+              "unified",
+              "dedicated",
+              "unspecified"
+            ]
+          },
+          "memory_total_mib": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "power_limit_w": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "max_sm_clock_mhz": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "max_memory_clock_mhz": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "pcie_max_generation": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "pcie_max_width": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "compute_capability": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "driver_version": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "capabilities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "nvidia_gpu_count",
+        "cuda_devices_detected",
+        "multi_gpu",
+        "shared_system_gpu_memory"
+      ],
+      "properties": {
+        "nvidia_gpu_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "cuda_devices_detected": {
+          "type": "boolean"
+        },
+        "multi_gpu": {
+          "type": "boolean"
+        },
+        "shared_system_gpu_memory": {
+          "type": "boolean"
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

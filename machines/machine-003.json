@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0",
+  "record_type": "public_compute_profile",
+  "profile_id": "machine-003",
+  "collection_scope": "host",
+  "system": {
+    "os_family": "Linux",
+    "architecture": "x86_64",
+    "logical_cpus": 2,
+    "memory_total_gib": 7.7,
+    "cpu_groups": [
+      {
+        "model": "Intel(R) Core(TM)2 Duo CPU     E8400  @ 3.00GHz",
+        "cores_per_socket": 2.0,
+        "sockets": 1.0,
+        "threads_per_core": 1.0
+      }
+    ]
+  },
+  "software": {
+    "docker_version": "29.8.2",
+    "nvidia_container_toolkit_version": "1.20.1",
+    "driver_cuda_max_version": "13.2"
+  },
+  "gpus": [
+    {
+      "device": "gpu-1",
+      "model": "NVIDIA GeForce RTX 3060 Ti",
+      "memory_architecture": "dedicated",
+      "memory_total_mib": 8192.0,
+      "power_limit_w": 200.0,
+      "max_sm_clock_mhz": 2100.0,
+      "max_memory_clock_mhz": 7001.0,
+      "pcie_max_generation": 2.0,
+      "pcie_max_width": 16.0,
+      "compute_capability": "8.6",
+      "driver_version": "595.91.07"
+    }
+  ],
+  "capabilities": {
+    "nvidia_gpu_count": 1,
+    "cuda_devices_detected": true,
+    "multi_gpu": false,
+    "shared_system_gpu_memory": false
+  },
+  "limitations": [
+    "Hardware discovery does not verify framework compatibility or model fit.",
+    "CUDA version is driver compatibility, not installed toolkit version.",
+    "GPU memory is per device; multiple devices are not a shared VRAM pool.",
+    "Null values indicate unavailable or unsupported counters.",
+    "Hardware combinations may be recognizable despite removal of direct identifiers."
+  ]
+}

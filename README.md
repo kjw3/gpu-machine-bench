@@ -120,3 +120,7 @@ Commit source code, schemas, synthetic test fixtures, and generic workload confi
 The pinned `configs/baseline-qwen3-4b.json` contains public model and container identifiers only. Place the matching GGUF artifact at `/models/baseline.gguf` in the inference container and verify its SHA-256 before running.
 
 Ignore rules prevent accidental addition of new files; they do not remove files already tracked by Git and can be bypassed with force-add. Review the staged diff and file list before every public push. The Docker build context includes only the runner source and Dockerfile.
+
+## Public compute profiles
+
+Use `python3 -m gpu_bench profile --id machine-001 --output machines/machine-001.json` to export hardware capabilities without direct machine identifiers. See [machines/README.md](machines/README.md) for fields, privacy limits, and the publication workflow. Public profiles are an intentional exception to the exclusion of raw machine inventories: only hardware models, capacities, software versions, and derived capability flags are retained.
