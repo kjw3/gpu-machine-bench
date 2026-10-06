@@ -1,0 +1,8 @@
+# Allow only the files needed by the runner image.
+**
+!Dockerfile
+!.dockerignore
+!gpu_bench/
+!gpu_bench/**
+**/__pycache__/
+**/*.pyc

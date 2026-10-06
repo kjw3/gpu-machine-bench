@@ -1,0 +1,20 @@
+{
+  "workload": "llm.llama_cpp",
+  "name": "baseline-256-v1",
+  "model": {
+    "name": "REPLACE_WITH_EXACT_GGUF_FILENAME",
+    "sha256": "REPLACE_WITH_HASH_MODEL_OUTPUT",
+    "quantization": "Q4_K_M"
+  },
+  "runtime": {
+    "image": "REPLACE_WITH_IMAGE_AT_SHA256_DIGEST",
+    "server_args": ["-m", "/models/baseline.gguf", "-c", "4096", "-ngl", "99", "-np", "1", "--host", "0.0.0.0", "--port", "8080"]
+  },
+  "prompt": "You are writing a practical guide to maintaining a small computer lab. Explain how to organize machine inventory, keep benchmark conditions consistent, and record experiments so another person can repeat them. Use concrete examples and continue with a detailed numbered checklist.",
+  "output_tokens": 256,
+  "seed": 42,
+  "warmup_runs": 1,
+  "repetitions": 5,
+  "timeout_s": 300,
+  "sample_interval_s": 0.5
+}

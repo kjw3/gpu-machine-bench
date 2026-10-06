@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/kjw3/gpu-machine-bench/schemas/result.schema.json",
+  "title": "GPU Machine Bench result v1",
+  "oneOf": [{"$ref": "#/$defs/inventory"}, {"$ref": "#/$defs/benchmark"}],
+  "$defs": {
+    "inventory": {
+      "type": "object",
+      "required": ["schema_version", "record_type", "captured_at", "machine_id", "hostname", "scope", "system", "software", "gpus", "warnings"],
+      "properties": {
+        "schema_version": {"const": "1.0"},
+        "record_type": {"const": "inventory"},
+        "captured_at": {"type": "string", "format": "date-time"},
+        "machine_id": {"type": "string", "minLength": 1},
+        "hostname": {"type": "string"},
+        "scope": {"enum": ["host", "container"]},
+        "system": {"type": "object"},
+        "software": {"type": "object"},
+        "gpus": {"type": "array", "items": {"type": "object", "required": ["uuid", "name"]}},
+        "warnings": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "trial": {
+      "type": "object",
+      "required": ["status", "index", "wall_s", "metrics", "telemetry"],
+      "properties": {
+        "status": {"enum": ["ok", "invalid", "error"]},
+        "index": {"type": "integer", "minimum": 0},
+        "wall_s": {"type": "number", "minimum": 0},
+        "metrics": {"type": "object", "additionalProperties": {"type": ["number", "null"], "minimum": 0}},
+        "telemetry": {"type": ["object", "null"]},
+        "error_type": {"type": "string"},
+        "invalid_reasons": {"type": "array", "items": {"type": "string"}},
+        "backend": {"type": "object"}
+      }
+    },
+    "benchmark": {
+      "type": "object",
+      "required": ["schema_version", "record_type", "run_id", "started_at", "finished_at", "status", "harness_version", "machine_id", "workload", "comparison_key", "prompt_sha256", "config", "inventory", "provenance", "warmups", "trials", "summary", "warnings"],
+      "properties": {
+        "schema_version": {"const": "1.0"},
+        "record_type": {"const": "benchmark"},
+        "run_id": {"type": "string", "format": "uuid"},
+        "started_at": {"type": "string", "format": "date-time"},
+        "finished_at": {"type": ["string", "null"], "format": "date-time"},
+        "status": {"enum": ["running", "ok", "failed", "interrupted"]},
+        "harness_version": {"type": "string"},
+        "machine_id": {"type": "string", "minLength": 1},
+        "workload": {"type": "string"},
+        "comparison_key": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "prompt_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "config": {"type": "object"},
+        "provenance": {"type": "object"},
+        "inventory": {"$ref": "#/$defs/inventory"},
+        "warmups": {"type": "array", "items": {"$ref": "#/$defs/trial"}},
+        "trials": {"type": "array", "items": {"$ref": "#/$defs/trial"}},
+        "summary": {"type": "object"},
+        "warnings": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+services:
+  inference:
+    image: ${LLAMA_IMAGE:?Set LLAMA_IMAGE to a tested image pinned by digest}
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - ${MODEL_DIR:?Set MODEL_DIR}:/models:ro
+    command: ["-m", "/models/baseline.gguf", "-c", "4096", "-ngl", "99", "-np", "1", "--host", "0.0.0.0", "--port", "8080"]
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: ["${GPU_UUID:?Set GPU_UUID}"]
+              capabilities: [gpu]
